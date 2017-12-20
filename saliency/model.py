@@ -1,5 +1,7 @@
 from saliency import *
 from multiprocessing import Pool
+import numpy as np
+
 try:
     import tensorflow as tf
 except Exception:
@@ -91,7 +93,7 @@ class TensorflowModel:
         self.__dict__.update(locals())
 
         tf.reset_default_graph()
-        new_saver = tf.train.import_meta_graph('{}.meta'.format(check_point))
+        self.new_saver = tf.train.import_meta_graph('{}.meta'.format(check_point))
 
         self.input_tensor = tf.get_collection('input_tensor')[0]
         self.centerbias_tensor = tf.get_collection('centerbias_tensor')[0]
@@ -102,20 +104,20 @@ class TensorflowModel:
         """ Compute log probability density
         """
         centerbias_data = np.zeros((1, X.shape[1], X.shape[2], 1))
-        log_density_prediction = np.zeros(image_data.shape[:3] + (1,))
+        log_density_prediction = np.zeros(X.shape[:3] + (1,))
 
         with tf.Session() as sess:
 
-            new_saver.restore(sess, check_point)
+            self.new_saver.restore(sess, self.check_point)
 
             for i in range(0, len(X), self.batch_size):
 
                 idc = slice(i, min(i+self.batch_size, len(X)))
-                bX = image_data[idc]
+                bX = X[idc]
 
                 log_density_prediction[idc] = sess.run(self.log_density, {
-                    input_tensor: bX,
-                    centerbias_tensor: self.centerbias_data,
+                    self.input_tensor: bX,
+                    self.centerbias_tensor: centerbias_data,
                 })
 
         return log_density_prediction
@@ -129,7 +131,7 @@ class DeepGazeII(TensorflowModel):
     """
 
     def __init__(self, *args, **kwargs):
-        super(self.__class__).__init__(*args,
+        super(self.__class__).__init__(self, *args,
                                        check_point = 'DeepGazeII.ckpt',
                                        **kwargs)
 
@@ -141,6 +143,6 @@ class ICF(TensorflowModel):
 
     """
     def __init__(self, *args, **kwargs):
-        super(self.__class__).__init__(*args,
+        super(self.__class__).__init__(self, *args,
                                        check_point = 'ICF.ckpt',
                                        **kwargs)
