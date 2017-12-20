@@ -1,14 +1,14 @@
-import skimage.color
-from scipy.ndimage.filters import convolve as conv2d
-
 import numpy  as np
-import skimage.io
 
+import skimage.color
+import skimage.io
 import skimage.transform
 import skimage.filters
-from scipy.stats import norm
 
-import utils
+from scipy.stats import norm
+from scipy.ndimage.filters import convolve as conv2d
+
+from . import utils
 
 ### Helper functions ###
 
@@ -35,7 +35,10 @@ def construct_gabor(angle, phase=0., gamma=1, stddev=10**.5, wavelen=3.5):
 
     return (expfilter * sinfilter).reshape(2*sz+1,2*sz+1)
 
-def attenuate_borders(img, borderSize):
+def attenuate_borders(img, borderSize,copy=False):
+    if img.ndim == 4:
+        return np.squeeze(np.stack([attenuate_borders(i, borderSize) for i in img], axis=0))
+
     w, h, _ = img.shape
 
     if (borderSize * 2 > w):
@@ -45,14 +48,19 @@ def attenuate_borders(img, borderSize):
     if (borderSize < 1):
         return
 
+    if copy:
+        img_ = img.copy()
+    else:
+        img_ = img
+
     dampening = np.linspace(0,1,borderSize)
 
-    img[:borderSize,:]  *= dampening[:,np.newaxis,np.newaxis]
-    img[-borderSize:,:] *= dampening[::-1,np.newaxis,np.newaxis]
-    img[:,:borderSize]  *= dampening[np.newaxis,:,np.newaxis]
-    img[:,-borderSize:] *= dampening[np.newaxis,::-1,np.newaxis]
+    img_[:borderSize,:]  *= dampening[:,np.newaxis,np.newaxis]
+    img_[-borderSize:,:] *= dampening[::-1,np.newaxis,np.newaxis]
+    img_[:,:borderSize]  *= dampening[np.newaxis,:,np.newaxis]
+    img_[:,-borderSize:] *= dampening[np.newaxis,::-1,np.newaxis]
 
-    return img
+    return img_
 
 def center_bias(maps, length = 3):
 
@@ -168,7 +176,7 @@ def saliency(img, surround_sig = [ 2, 8], subtract_min=True, norm_weights=True):
 
 ### Sequential saliency
 
-def sequential_salicency(salmap, length, inhibition_strategy='gaussian', sampling_strategy='max'):
+def sequential_salicency(salmap, length, sigma=3, inhibition_strategy='gaussian', sampling_strategy='max'):
     """ Implementation of inhibition by return
     """
 
@@ -181,7 +189,7 @@ def sequential_salicency(salmap, length, inhibition_strategy='gaussian', samplin
         fixation[t,:] = np.array([x,y])
         inhibition[:,:] = 0
         inhibition[x,y] = 1
-        inhibition = skimage.filters.gaussian(inhibition, sigma=2, mode='reflect')
+        inhibition = skimage.filters.gaussian(inhibition, sigma=sigma, mode='reflect')
         inhibition = 1 - inhibition / inhibition.max()
         current_map *= inhibition
 

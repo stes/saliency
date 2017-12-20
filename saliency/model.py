@@ -1,6 +1,8 @@
-from saliency import *
 from multiprocessing import Pool
 import numpy as np
+import skimage
+
+from . import saliency, utils
 
 try:
     import tensorflow as tf
@@ -18,13 +20,14 @@ class IttyKoch:
                  mapwidth = 64,
                  gabor_wavelength = 3.5,
                  n_gabor_angles = 4,
-                 channels = 'COIB',
                  center_bias = 1.5,
                  blur_radius = 0.04,
                  gabor_gamma = 1,
-                 border_size = 3,
+                 border_size = 10,
                  surround_sig = [1, 3],
+                 logtransform = False,
                  smooting_final = 2,
+                 top_down = 'peakiness',
                  n_jobs=1):
 
         self.__dict__.update(locals())
@@ -46,18 +49,21 @@ class IttyKoch:
             with Pool(self.n_jobs) as p:
                 result = p.map(self.predict,img)
             return result
-
         if img.ndim == 2:
             img = img[:,:,np.newaxis]
 
-        maps = collect_maps(resize(img, 128))
-        maps = attenuate_borders(maps, self.border_size)
-        maps = resize(maps,self.mapwidth)
+        # compute saliency maps
+        maps = saliency.collect_maps(saliency.resize(img, self.mapwidth))
+        #salmaps = saliency.attenuate_borders(salmaps, self.border_size)
 
-        salmaps = np.stack([saliency(maps[...,i], self.surround_sig)
+        salmaps = np.stack([saliency.saliency(maps[...,i], self.surround_sig)
                             for i in range(maps.shape[2])], axis=-1)
-        weights = np.array([1.0] + [1/24.]*24 + [1.0]*3)
-        weights /= weights.sum()
+
+        if self.top_down == 'peakiness':
+            weights = np.array([saliency.peakiness(salmaps[...,i]) for i in range(salmaps.shape[2])])
+        else:
+            weights = np.array([1.0] + [1/24.]*24 + [1.0]*3)
+            weights /= weights.sum()
 
         final_map = (salmaps*weights).sum(axis=-1)
 
@@ -67,16 +73,18 @@ class IttyKoch:
                                          truncate=2, mode='reflect')
 
         if self.center_bias is not None:
-            final_map = center_bias(final_map, length = self.center_bias)
+            final_map = saliency.center_bias(final_map, length = self.center_bias)
 
-        final_map /= np.max(final_map)
+        if self.logtransform:
+            final_map = -np.log(1 + 1e-5 - final_map)
+
+        final_map = utils.minmaxnorm(final_map, axis=(0,1))
 
         # optimize for NSS score by enforcing sharp maxima
-        final_map = -np.log(1 + 1e-5 - final_map)
-        if self.smooting_final is not None:
-            final_map = skimage.filters.gaussian(final_map,         \
-                                         sigma=2, \
-                                         truncate=2, mode='reflect')
+        #if self.smooting_final is not None:
+    #        final_map = skimage.filters.gaussian(final_map,         \
+#                                         sigma=2, \
+                                         #truncate=2, mode='reflect')
 
         if return_chanmaps:
             return final_map, salmaps#, maps

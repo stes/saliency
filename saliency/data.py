@@ -18,13 +18,36 @@ GAZE_FILES   = [
     'gaze_clip_17.mat',
 ]
 
-def load_fixations(model, root):
-    """ Load pre-computed fixations for the frames in the Video
-    """
-    pass
+def load_images(root="data/imgs"):
 
+    X = []
+    y = []
+    src =  ['54.jpg',
+            '67.jpg',
+            '91.jpg',
+            'balloons.png',
+            '2sand5s.png',
+            'conj2.png',
+            'tdo1.png']
+    gt = ['d54.jpg', 'd67.jpg', 'd91.jpg', None, None, None, None]
 
+    root = "data/imgs"
 
+    for fname, fname_gt in zip(src, gt):
+        fname = os.path.join(root, fname)
+
+        img = skimage.io.imread(fname) / 255.
+        X.append(img)
+
+        if fname_gt is not None:
+            fname_gt = os.path.join(root, fname_gt)
+            img = skimage.io.imread(fname_gt) / 255.
+            y.append(img)
+
+        else:
+            y.append(None)
+
+    return X, y
 
 def load_video(index, root='data/attention_video_database'):
     """ Load video and ground truth gaze files

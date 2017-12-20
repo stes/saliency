@@ -1,5 +1,12 @@
 import numpy  as np
 
+def minmaxnorm(X, axis=-1):
+
+    mmin = X.min(axis=axis, keepdims=True)
+    mmax = X.max(axis=axis, keepdims=True)
+
+    return (X - mmin) / (mmax - mmin)
+
 def argmax2d(X):
 
     if X.ndim == 2:
@@ -21,7 +28,7 @@ def mse(salmap, groundtruth, per_frame=True):
     """ Compute Mean Squared Error Score """
 
     median = np.nanmedian(groundtruth, axis=-1)
-    xx, yy = utils.argmax2d(salmap)
+    xx, yy = argmax2d(salmap)
 
     mse_score = ((xx - median[0]) ** 2 + (xx - median[1])**2)
 
@@ -32,7 +39,7 @@ def mse(salmap, groundtruth, per_frame=True):
 def nss(S_, y, normalized=False, per_frame=True):
     """ Compute NSS Score """
     if not normalized:
-        salmap = (salmap - salmap.mean(axis=(1,2), keepdims=True)) / salmap.std(axis=(1,2), keepdims=True)
+        S_ = (S_ - S_.mean(axis=(1,2), keepdims=True)) / S_.std(axis=(1,2), keepdims=True)
 
     y_ = y.copy()
     y_[0] = np.clip(y_[0], 0, S_.shape[1]-1)

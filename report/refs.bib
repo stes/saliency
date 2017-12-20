@@ -1,0 +1,123 @@
+@article{Borji2015,
+abstract = {Saliency modeling has been an active research area in computer vision for about two decades. Existing state of the art models perform very well in predicting where people look in natural scenes. There is, however, the risk that these models may have been overfitting themselves to available small scale biased datasets, thus trapping the progress in a local minimum. To gain a deeper insight regarding current issues in saliency modeling and to better gauge progress, we recorded eye movements of 120 observers while they freely viewed a large number of naturalistic and artificial images. Our stimuli includes 4000 images; 200 from each of 20 categories covering different types of scenes such as Cartoons, Art, Objects, Low resolution images, Indoor, Outdoor, Jumbled, Random, and Line drawings. We analyze some basic properties of this dataset and compare some successful models. We believe that our dataset opens new challenges for the next generation of saliency models and helps conduct behavioral studies on bottom-up visual attention.},
+archivePrefix = {arXiv},
+arxivId = {1505.03581},
+author = {Borji, Ali and Itti, Laurent},
+eprint = {1505.03581},
+journal = {CVPR 2015 workshop on "Future of Datasets"},
+mendeley-groups = {Saliency},
+title = {{CAT2000: A Large Scale Fixation Dataset for Boosting Saliency Research}},
+url = {http://arxiv.org/abs/1505.03581},
+year = {2015}
+}
+@misc{Bylinskii2015,
+author = {Bylinskii, Zoya and Judd, Tilke and Borji, Ali and Durand, Fr{\'{e}}do and Oliva, Aude and Torralba, Antonio},
+howpublished = {http://saliency.mit.edu/},
+mendeley-groups = {Saliency},
+title = {{MIT Saliency Benchmark}},
+url = {http://saliency.mit.edu/results{\_}mit300.html},
+year = {2015}
+}
+@article{Bylinskii2016,
+abstract = {How best to evaluate a saliency model's ability to predict where humans look in images is an open research question. The choice of evaluation metric depends on how saliency is defined and how the ground truth is represented. Metrics differ in how they rank saliency models, and this results from how false positives and false negatives are treated, whether viewing biases are accounted for, whether spatial deviations are factored in, and how the saliency maps are pre-processed. In this paper, we provide an analysis of 8 different evaluation metrics and their properties. With the help of systematic experiments and visualizations of metric computations, we add interpretability to saliency scores and more transparency to the evaluation of saliency models. Building off the differences in metric properties and behaviors, we make recommendations for metric selections under specific assumptions and for specific applications.},
+archivePrefix = {arXiv},
+arxivId = {1604.03605},
+author = {Bylinskii, Zoya and Judd, Tilke and Oliva, Aude and Torralba, Antonio and Durand, Fr{\'{e}}do},
+eprint = {1604.03605},
+journal = {arXiv preprint arXiv:1604.03605},
+mendeley-groups = {Saliency},
+title = {{What do different evaluation metrics tell us about saliency models?}},
+url = {http://arxiv.org/abs/1604.03605},
+year = {2016}
+}
+@article{Itti2000,
+abstract = {Most models of visual search, whether involving overt eye
+movements or covert shifts of attention, are based on the
+concept of a saliency map, that is, an explicit
+two-dimensional map that encodes the saliency or
+conspicuity of objects in the visual environment.
+Competition among neurons in this map gives rise to a
+single winning location that corresponds to the next
+attended target. Inhibiting this location automatically
+allows the system to attend to the next most salient
+location. We describe a detailed computer implementation of
+such a scheme, focusing on the problem of combining
+information across modalities, here orientation, intensity
+and color information, in a purely stimulus-driven manner.
+The model is applied to common psychophysical stimuli as
+well as to a very demanding visual search task. Its
+successful performance is used to address the extent to
+which the primate visual system carries out visual search
+via one or more such saliency maps and how this can be
+tested.},
+author = {Itti, Laurent and Koch, Christof},
+doi = {10.1016/S0042-6989(99)00163-7},
+issn = {0042-6989},
+journal = {Vision Research},
+keywords = {saliency,vision systems,visual attention},
+mendeley-groups = {Saliency},
+number = {10-12},
+pages = {1489--1506},
+title = {{A saliency-based search mechanism for overt and covert hifts of visual attention}},
+url = {www.elsevier.com/locate/visres},
+volume = {40},
+year = {2000}
+}
+@article{Kummerer2017,
+abstract = {The field of fixation prediction is heavily model-driven, with dozens of new models published every year. However, progress in the field can be difficult to judge because models are compared using a variety of inconsistent metrics. As soon as a saliency map is optimized for a certain metric, it is penalized by other metrics. Here we propose a principled approach to solve the benchmarking problem: we separate the notions of saliency models and saliency maps. We define a saliency model to be a probabilistic model of fixation density prediction and, inspired by Bayesian decision theory, a saliency map to be a metric-specific prediction derived from the model density which maximizes the expected performance on that metric. We derive the optimal saliency map for the most commonly used saliency metrics (AUC, sAUC, NSS, CC, SIM, KL-Div) and show that they can be computed analytically or approximated with high precision using the model density. We show that this leads to consistent rankings in all metrics and avoids the penalties of using one saliency map for all metrics. Under this framework, "good" models will perform well in all metrics.},
+archivePrefix = {arXiv},
+arxivId = {1704.08615},
+author = {K{\"{u}}mmerer, Matthias and Wallis, Thomas S. A. and Bethge, Matthias},
+eprint = {1704.08615},
+mendeley-groups = {Saliency},
+title = {{Saliency Benchmarking: Separating Models, Maps and Metrics}},
+url = {http://arxiv.org/abs/1704.08615},
+year = {2017}
+}
+@article{Kummerer2017b,
+abstract = {Figure 1: Representative examples for fixation prediction. Fixations are colored depending on whether they are better predicted by the high-level deep object features (DeepGaze II) model (blue) or the low-level intensity contrast features (ICF) model (red). This separates the images into areas where fixations are better predicted by high-level and low-level image features respectively. DeepGaze II is very good at predicting the human tendency to look at text and faces (first and second image), while ICF is better at predicting fixations driven by low-level contrast (third image). In particular, DeepGaze II fails if fixations are primarily driven by low-level features, although high-level features like text are present in the image (fourth image). Abstract Understanding where people look in images is an im-portant problem in computer vision. Despite significant re-search, it remains unclear to what extent human fixations can be predicted by low-level (contrast) compared to high-level (presence of objects) image features. Here we ad-dress this problem by introducing two novel models that use different feature spaces but the same readout architec-ture. The first model predicts human fixations based on deep neural network features trained on object recognition. This model sets a new state-of-the art in fixation predic-tion by achieving top performance in area under the curve metrics on the MIT300 hold-out benchmark (AUC = 88{\%}, sAUC = 77{\%}, NSS = 2.34). The second model uses purely low-level (isotropic contrast) features. This model achieves better performance than all models not using features pre-trained on object recognition, making it a strong baseline to assess the utility of high-level features. We then evaluate and visualize which fixations are better explained by low-level compared to high-level image features. Surprisingly we find that a substantial proportion of fixations are bet-ter explained by the simple low-level model than the state-of-the-art model. Comparing different features within the same powerful readout architecture allows us to better un-derstand the relevance of low-versus high-level features in predicting fixation locations, while simultaneously achiev-ing state-of-the-art saliency prediction.},
+author = {K{\"{u}}mmerer, Matthias and Wallis, Thomas S A and Gatys, Leon A and Bethge, Matthias},
+doi = {10.1109/ICCV.2017.513},
+mendeley-groups = {Saliency},
+pages = {4799--4808},
+title = {{Understanding Low-and High-Level Contributions to Fixation Prediction}},
+url = {http://bethgelab.org/media/publications/Kuemmerer{\_}High{\_}Low{\_}Level{\_}Fixations{\_}ICCV{\_}2017.pdf},
+year = {2017}
+}
+@article{LeCun2015,
+abstract = {Machine-learning technology powers many aspects of modern society: from web searches to content filtering on social net-works to recommendations on e-commerce websites, and it is increasingly present in consumer products such as cameras and smartphones. Machine-learning systems are used to identify objects in images, transcribe speech into text, match news items, posts or products with users' interests, and select relevant results of search. Increasingly, these applications make use of a class of techniques called deep learning. Conventional machine-learning techniques were limited in their ability to process natural data in their raw form. For decades, con-structing a pattern-recognition or machine-learning system required careful engineering and considerable domain expertise to design a fea-ture extractor that transformed the raw data (such as the pixel values of an image) into a suitable internal representation or feature vector from which the learning subsystem, often a classifier, could detect or classify patterns in the input. Representation learning is a set of methods that allows a machine to be fed with raw data and to automatically discover the representations needed for detection or classification. Deep-learning methods are representation-learning methods with multiple levels of representa-tion, obtained by composing simple but non-linear modules that each transform the representation at one level (starting with the raw input) into a representation at a higher, slightly more abstract level. With the composition of enough such transformations, very complex functions can be learned. For classification tasks, higher layers of representation amplify aspects of the input that are important for discrimination and suppress irrelevant variations. An image, for example, comes in the form of an array of pixel values, and the learned features in the first layer of representation typically represent the presence or absence of edges at particular orientations and locations in the image. The second layer typically detects motifs by spotting particular arrangements of edges, regardless of small variations in the edge positions. The third layer may assemble motifs into larger combinations that correspond to parts of familiar objects, and subsequent layers would detect objects as combinations of these parts. The key aspect of deep learning is that these layers of features are not designed by human engineers: they are learned from data using a general-purpose learning procedure. Deep learning is making major advances in solving problems that have resisted the best attempts of the artificial intelligence commu-nity for many years. It has turned out to be very good at discovering intricate structures in high-dimensional data and is therefore applica-ble to many domains of science, business and government. In addition to beating records in image recognition},
+author = {LeCun, Yann and Bengio, Yoshua and Hinton, Geoffrey},
+doi = {10.1038/nature14539},
+file = {:home/stes/paper/2015/2015{\_}Deep learning{\_}LeCun, Bengio, Hinton.pdf:pdf},
+mendeley-groups = {PDFs,[MSNE 2] Debating Seminar,Deep Learning,Philosophy,Saliency},
+month = {jan},
+title = {{Deep learning}},
+year = {2015}
+}
+@article{Simonyan2014,
+abstract = {In this work we investigate the effect of the convolutional network depth on its accuracy in the large-scale image recognition setting. Our main contribution is a thorough evaluation of networks of increasing depth using an architecture with very small (3x3) convolution filters, which shows that a significant improvement on the prior-art configurations can be achieved by pushing the depth to 16-19 weight layers. These findings were the basis of our ImageNet Challenge 2014 submission, where our team secured the first and the second places in the localisation and classification tracks respectively. We also show that our representations generalise well to other datasets, where they achieve state-of-the-art results. We have made our two best-performing ConvNet models publicly available to facilitate further research on the use of deep visual representations in computer vision.},
+archivePrefix = {arXiv},
+arxivId = {1409.1556},
+author = {Simonyan, Karen and Zisserman, Andrew},
+doi = {10.1016/j.infsof.2008.09.005},
+eprint = {1409.1556},
+file = {:home/stes/paper/2015/2015{\_}VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION{\_}Simonyan, Zisserman.pdf:pdf},
+isbn = {0950-5849},
+issn = {09505849},
+mendeley-groups = {PDFs,Saliency},
+pmid = {16873662},
+title = {{Very Deep Convolutional Networks for Large-Scale Image Recognition}},
+url = {http://arxiv.org/abs/1409.1556},
+year = {2014}
+}
+@article{Kummerer2014,
+abstract = {Recent results suggest that state-of-the-art saliency models perform far from optimal in predicting fixations. This lack in performance has been attributed to an inability to model the influence of high-level image features such as objects. Recent seminal advances in applying deep neural networks to tasks like object recognition suggests that they are able to capture this kind of structure. However, the enormous amount of training data necessary to train these networks makes them difficult to apply directly to saliency prediction. We present a novel way of reusing existing neural networks that have been pretrained on the task of object recognition in models of fixation prediction. Using the well-known network of Krizhevsky et al. (2012), we come up with a new saliency model that significantly outperforms all state-of-the-art models on the MIT Saliency Benchmark. We show that the structure of this network allows new insights in the psychophysics of fixation selection and potentially their neural implementation. To train our network, we build on recent work on the modeling of saliency as point processes.},
+archivePrefix = {arXiv},
+arxivId = {1411.1045},
+author = {K{\"{u}}mmerer, Matthias and Theis, Lucas and Bethge, Matthias},
+eprint = {1411.1045},
+mendeley-groups = {Saliency},
+title = {{Deep Gaze I: Boosting Saliency Prediction with Feature Maps Trained on ImageNet}},
+url = {http://arxiv.org/abs/1411.1045},
+year = {2014}
+}
