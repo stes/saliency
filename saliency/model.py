@@ -1,11 +1,15 @@
 from saliency import *
 from multiprocessing import Pool
+try:
+    import tensorflow as tf
+except Exception:
+    import warnings
+    warnings.warn("Could not import tensorflow. DeepGaze models will not be runnable.")
+
 
 class IttyKoch:
 
     """ Python Implementation of the Itty Koch Saliency Model
-
-    Reference
     """
 
     def __init__(self,
@@ -77,33 +81,6 @@ class IttyKoch:
         return final_map
 
 
-import tensorflow as tf
-
-class DeepGazeII(TensorflowModel):
-    """ Implementation of the Deep Gaze II model
-
-    Adapted from https://deepgaze.bethgelab.org/
-
-
-    """
-
-    def __init__(self, *args, **kwargs):
-        super(self.__class__).__init__(*args,
-                                       check_point = 'DeepGazeII.ckpt',
-                                       **kwargs)
-
-class ICF(TensorflowModel):
-    """ Implementation of the Deep Gaze II model
-
-    Adapted from https://deepgaze.bethgelab.org/
-
-
-    """
-    def __init__(self, *args, **kwargs):
-        super(self.__class__).__init__(*args,
-                                       check_point = 'ICF.ckpt',
-                                       **kwargs)
-
 
 class TensorflowModel:
 
@@ -142,3 +119,28 @@ class TensorflowModel:
                 })
 
         return log_density_prediction
+
+class DeepGazeII(TensorflowModel):
+    """ Implementation of the Deep Gaze II model
+
+    Adapted from https://deepgaze.bethgelab.org/
+
+
+    """
+
+    def __init__(self, *args, **kwargs):
+        super(self.__class__).__init__(*args,
+                                       check_point = 'DeepGazeII.ckpt',
+                                       **kwargs)
+
+class ICF(TensorflowModel):
+    """ Implementation of the Deep Gaze II model
+
+    Adapted from https://deepgaze.bethgelab.org/
+
+
+    """
+    def __init__(self, *args, **kwargs):
+        super(self.__class__).__init__(*args,
+                                       check_point = 'ICF.ckpt',
+                                       **kwargs)
