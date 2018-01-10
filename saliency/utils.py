@@ -28,7 +28,7 @@ def mse(salmap, groundtruth, per_frame=True):
     """ Compute Mean Squared Error Score """
 
     median = np.nanmedian(groundtruth, axis=-1)
-    xx, yy = argmax2d(salmap)
+    yy, xx = argmax2d(salmap)
 
     mse_score = ((xx - median[0]) ** 2 + (xx - median[1])**2)
 

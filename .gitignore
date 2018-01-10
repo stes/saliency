@@ -1,11 +1,10 @@
 bin/
 data/
 deep-gaze/
+deep_gaze/
 instructions/
 matlab/
-report/
 
-*.pdf
 
 
 ### AUTOMATICALLY GENERATED SECTION : LATEX ###
